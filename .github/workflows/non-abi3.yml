@@ -111,11 +111,44 @@ jobs:
           pip install pytest
           cd non-abi3 && pytest
 
+  emscripten:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install pyodide-build
+      - shell: bash
+        run: echo EMSCRIPTEN_VERSION=$(pyodide config get emscripten_version) >> $GITHUB_ENV
+      - uses: mymindstorm/setup-emsdk@v11
+        with:
+          version: ${{ env.EMSCRIPTEN_VERSION }}
+          actions-cache-folder: emsdk-cache
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          target: wasm32-unknown-emscripten
+          args: --release --out dist -i 3.10 --manifest-path non-abi3/Cargo.toml
+      - name: Upload wheels
+        uses: actions/upload-artifact@v3
+        with:
+          name: wasm-wheels
+          path: dist
+      - name: pytest
+        run: |
+          set -e
+          pyodide venv .venv-pyodide
+          source .venv-pyodide/bin/python
+          pip install non-abi3 --find-links dist --force-reinstall
+          pip install pytest
+          cd non-abi3 && pytest
+
   release:
     name: Release
     runs-on: ubuntu-latest
     if: "startsWith(github.ref, 'refs/tags/')"
-    needs: [linux, windows, macos]
+    needs: [linux, windows, macos, emscripten]
     steps:
       - uses: actions/download-artifact@v3
         with:
@@ -127,3 +160,13 @@ jobs:
         with:
           command: upload
           args: --skip-existing *
+      - uses: actions/download-artifact@v3
+        with:
+          name: wasm-wheels
+          path: wasm
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            wasm/*.whl
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') }}
