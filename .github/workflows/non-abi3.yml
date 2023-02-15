@@ -140,11 +140,10 @@ jobs:
         with:
           node-version: '18'
       - name: pytest
-        shell: bash
         run: |
           set -e
           pyodide venv .venv
-          source .venv/bin/python
+          source .venv/bin/activate
           pip install non-abi3 --find-links dist --force-reinstall
           pip install pytest
           cd non-abi3 &&  python -m pytest
