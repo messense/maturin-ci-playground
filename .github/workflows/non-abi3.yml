@@ -136,14 +136,17 @@ jobs:
         with:
           name: wasm-wheels
           path: dist
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
       - name: pytest
         run: |
           set -e
-          pyodide venv .venv-pyodide
-          source .venv-pyodide/bin/python
+          pyodide venv .venv
+          source .venv/bin/python
           pip install non-abi3 --find-links dist --force-reinstall
           pip install pytest
-          cd non-abi3 && pytest
+          cd non-abi3 &&  python -m pytest
 
   release:
     name: Release
