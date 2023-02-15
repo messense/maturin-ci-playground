@@ -139,10 +139,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
+      - run: pyodide venv .venv
       - name: pytest
         run: |
           set -e
-          pyodide venv .venv
           source .venv/bin/python
           pip install non-abi3 --find-links dist --force-reinstall
           pip install pytest
