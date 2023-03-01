@@ -29,6 +29,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           args: --release --out dist --find-interpreter --manifest-path non-abi3/Cargo.toml
+          sccache: 'true'
           manylinux: auto
       - name: Upload wheels
         uses: actions/upload-artifact@v3
@@ -75,6 +76,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           args: --release --out dist --find-interpreter --manifest-path non-abi3/Cargo.toml
+          sccache: 'true'
       - name: Upload wheels
         uses: actions/upload-artifact@v3
         with:
@@ -104,6 +106,7 @@ jobs:
         with:
           target: ${{ matrix.target }}
           args: --release --out dist --find-interpreter --manifest-path non-abi3/Cargo.toml
+          sccache: 'true'
       - name: Upload wheels
         uses: actions/upload-artifact@v3
         with:
@@ -137,6 +140,7 @@ jobs:
         with:
           target: wasm32-unknown-emscripten
           args: --release --out dist -i 3.10 --manifest-path non-abi3/Cargo.toml
+          sccache: 'true'
           rust-toolchain: nightly
       - name: Upload wheels
         uses: actions/upload-artifact@v3
@@ -153,7 +157,7 @@ jobs:
           source .venv/bin/activate
           pip install non-abi3 --find-links dist --force-reinstall
           pip install pytest
-          cd non-abi3 &&  python -m pytest
+          cd non-abi3 && python -m pytest
 
   sdist:
     runs-on: ubuntu-latest
