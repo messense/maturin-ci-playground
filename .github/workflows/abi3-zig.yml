@@ -138,8 +138,6 @@ jobs:
           name: wheels-macos-${{ matrix.platform.target }}
           path: dist
       - name: pytest
-        if: ${{ !startsWith(matrix.platform.target, 'aarch64') }}
-        shell: bash
         run: |
           set -e
           pip install abi3 --find-links dist --force-reinstall
