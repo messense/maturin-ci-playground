@@ -23,20 +23,19 @@ jobs:
     runs-on: ${{ matrix.platform.runner }}
     strategy:
       matrix:
-        target:
-          platform:
-           - runner: ubuntu-latest
-             target: x86_64
-           - runner: ubuntu-latest
-             target: x86
-           - runner: ubuntu-latest
-             target: aarch64
-           - runner: ubuntu-latest
-             target: armv7
-           - runner: ubuntu-latest
-             target: s390x
-           - runner: ubuntu-latest
-             target: ppc64le
+        platform:
+         - runner: ubuntu-latest
+           target: x86_64
+         - runner: ubuntu-latest
+           target: x86
+         - runner: ubuntu-latest
+           target: aarch64
+         - runner: ubuntu-latest
+           target: armv7
+         - runner: ubuntu-latest
+           target: s390x
+         - runner: ubuntu-latest
+           target: ppc64le
     steps:
       - uses: actions/checkout@v4
       - name: Build wheels
@@ -56,12 +55,11 @@ jobs:
     runs-on: ${{ matrix.platform.runner }}
     strategy:
       matrix:
-        target:
-          platform:
-           - runner: windows-latest
-             target: x64
-           - runner: windows-latest
-             target: x86
+        platform:
+         - runner: windows-latest
+           target: x64
+         - runner: windows-latest
+           target: x86
     steps:
       - uses: actions/checkout@v4
       - name: Build wheels
@@ -80,12 +78,11 @@ jobs:
     runs-on: ${{ matrix.platform.runner }}
     strategy:
       matrix:
-        target:
-          platform:
-           - runner: macos-latest
-             target: x86_64
-           - runner: macos-14
-             target: aarch64
+        platform:
+         - runner: macos-latest
+           target: x86_64
+         - runner: macos-14
+           target: aarch64
     steps:
       - uses: actions/checkout@v4
       - name: Build wheels
