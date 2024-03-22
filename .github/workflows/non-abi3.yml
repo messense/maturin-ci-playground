@@ -58,8 +58,8 @@ jobs:
         shell: bash
         run: |
           set -e
-          python3 -m venv venv
-          source ./venv/bin/activate
+          python3 -m venv .venv
+          source .venv/bin/activate
           pip install non-abi3 --find-links dist --force-reinstall
           pip install pytest
           cd non-abi3 && pytest
@@ -110,8 +110,8 @@ jobs:
         shell: bash
         run: |
           set -e
-          python3 -m venv venv
-          source ./venv/bin/activate
+          python3 -m venv .venv
+          source .venv/Scripts/activate
           pip install non-abi3 --find-links dist --force-reinstall
           pip install pytest
           cd non-abi3 && pytest
@@ -144,8 +144,8 @@ jobs:
       - name: pytest
         run: |
           set -e
-          python3 -m venv venv
-          source ./venv/bin/activate
+          python3 -m venv .venv
+          source .venv/bin/activate
           pip install non-abi3 --find-links dist --force-reinstall
           pip install pytest
           cd non-abi3 && pytest
