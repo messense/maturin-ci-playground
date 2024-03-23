@@ -36,6 +36,21 @@ jobs:
             target: s390x
           - runner: ubuntu-latest
             target: ppc64le
+          - runner: ubuntu-latest
+            target: x86_64
+            compatibility: muslinux_1_2
+          - runner: ubuntu-latest
+            target: i686
+            compatibility: muslinux_1_2
+          - runner: ubuntu-latest
+            target: aarch64
+            compatibility: muslinux_1_2
+          - runner: ubuntu-latest
+            target: armv7
+            compatibility: muslinux_1_2
+          - runner: ubuntu-latest
+            target: powerpc64le
+            compatibility: muslinux_1_2
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -47,7 +62,7 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: --release --out dist --manifest-path abi3/Cargo.toml --zig
           sccache: 'true'
-          manylinux: auto
+          manylinux: ${{ matrix.platform.compatibility || 'auto' }}
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
