@@ -46,10 +46,10 @@ jobs:
             target: aarch64
             compatibility: muslinux_1_2
           - runner: ubuntu-latest
-            target: armv7
+            target: armv7l
             compatibility: muslinux_1_2
           - runner: ubuntu-latest
-            target: powerpc64le
+            target: ppc64le
             compatibility: muslinux_1_2
     steps:
       - uses: actions/checkout@v4
