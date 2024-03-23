@@ -48,9 +48,6 @@ jobs:
           - runner: ubuntu-latest
             target: armv7l
             compatibility: musllinux_1_2
-          - runner: ubuntu-latest
-            target: ppc64le
-            compatibility: musllinux_1_2
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
