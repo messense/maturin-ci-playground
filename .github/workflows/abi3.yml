@@ -38,19 +38,19 @@ jobs:
             target: ppc64le
           - runner: ubuntu-latest
             target: x86_64
-            compatibility: muslinux_1_2
+            compatibility: musllinux_1_2
           - runner: ubuntu-latest
             target: i686
-            compatibility: muslinux_1_2
+            compatibility: musllinux_1_2
           - runner: ubuntu-latest
             target: aarch64
-            compatibility: muslinux_1_2
+            compatibility: musllinux_1_2
           - runner: ubuntu-latest
             target: armv7l
-            compatibility: muslinux_1_2
+            compatibility: musllinux_1_2
           - runner: ubuntu-latest
             target: ppc64le
-            compatibility: muslinux_1_2
+            compatibility: musllinux_1_2
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
