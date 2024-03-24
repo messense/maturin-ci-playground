@@ -94,16 +94,16 @@ jobs:
         if: ${{ contains(matrix.platform.compatibility, 'musl') }}
         uses: addnab/docker-run-action@v3
         with:
-        image: alpine:latest
-        options: -v ${ github.workspace }:/io -w /io
-        run: |
-          set -e
-          apk add py3-pip py3-virtualenv
-          python3 -m virtualenv .venv
-          source .venv/bin/activate
-          pip install non-abi3 --no-index --find-links dist --force-reinstall
-          pip install pytest
-          cd non-abi3 && pytest
+          image: alpine:latest
+          options: -v ${ github.workspace }:/io -w /io
+          run: |
+            set -e
+            apk add py3-pip py3-virtualenv
+            python3 -m virtualenv .venv
+            source .venv/bin/activate
+            pip install non-abi3 --no-index --find-links dist --force-reinstall
+            pip install pytest
+            cd non-abi3 && pytest
 
   windows:
     runs-on: ${{ matrix.platform.runner }}
