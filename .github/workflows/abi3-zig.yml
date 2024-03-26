@@ -47,7 +47,6 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: --release --out dist --manifest-path abi3/Cargo.toml --zig
           sccache: 'true'
-          manylinux: ${{ matrix.platform.compatibility || 'auto' }}
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -65,7 +64,7 @@ jobs:
           cd abi3 && pytest
       - name: pytest
         if: ${{ !startsWith(matrix.platform.target, 'x86') && matrix.platform.target != 'ppc64' }}
-        uses: uraimo/run-on-arch-action@v2.5.0
+        uses: uraimo/run-on-arch-action@v2
         with:
           arch: ${{ matrix.platform.target }}
           distro: ubuntu22.04
@@ -86,16 +85,12 @@ jobs:
         platform:
           - runner: ubuntu-latest
             target: x86_64
-            compatibility: musllinux_1_2
           - runner: ubuntu-latest
             target: x86
-            compatibility: musllinux_1_2
           - runner: ubuntu-latest
             target: aarch64
-            compatibility: musllinux_1_2
           - runner: ubuntu-latest
             target: armv7
-            compatibility: musllinux_1_2
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -107,6 +102,7 @@ jobs:
           target: ${{ matrix.platform.target }}
           args: --release --out dist --manifest-path abi3/Cargo.toml
           sccache: 'true'
+          manylinux: musllinux_1_2
       - name: Upload wheels
         uses: actions/upload-artifact@v4
         with:
@@ -128,7 +124,7 @@ jobs:
             cd abi3 && pytest
       - name: pytest
         if: ${{ !startsWith(matrix.platform.target, 'x86') }}
-        uses: uraimo/run-on-arch-action@v2.5.0
+        uses: uraimo/run-on-arch-action@v2
         with:
           arch: ${{ matrix.platform.target }}
           distro: alpine_latest
