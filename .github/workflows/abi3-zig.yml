@@ -60,15 +60,17 @@ jobs:
         with:
           name: wheels-linux-${{ matrix.platform.target }}
           path: dist
+      - uses: astral-sh/setup-uv@v7
+        if: ${{ startsWith(matrix.platform.target, 'x86_64') }}
       - name: pytest
         if: ${{ startsWith(matrix.platform.target, 'x86_64') }}
         shell: bash
         run: |
           set -e
-          python3 -m venv .venv
+          uv venv .venv
           source .venv/bin/activate
-          pip install abi3 --no-index --no-deps --find-links dist --force-reinstall
-          pip install abi3 pytest
+          uv pip install abi3 --no-index --no-deps --find-links dist --reinstall
+          uv pip install abi3 pytest
           cd abi3 && pytest
       - name: pytest
         if: ${{ !startsWith(matrix.platform.target, 'x86') && matrix.platform.target != 'ppc64' }}
@@ -194,14 +196,15 @@ jobs:
         with:
           name: wheels-windows-${{ matrix.platform.target }}
           path: dist
+      - uses: astral-sh/setup-uv@v7
       - name: pytest
         shell: bash
         run: |
           set -e
-          python3 -m venv .venv
+          uv venv .venv
           source .venv/Scripts/activate
-          pip install abi3 --no-index --no-deps --find-links dist --force-reinstall
-          pip install abi3 pytest
+          uv pip install abi3 --no-index --no-deps --find-links dist --reinstall
+          uv pip install abi3 pytest
           cd abi3 && pytest
 
   macos:
@@ -235,13 +238,14 @@ jobs:
         with:
           name: wheels-macos-${{ matrix.platform.target }}
           path: dist
+      - uses: astral-sh/setup-uv@v7
       - name: pytest
         run: |
           set -e
-          python3 -m venv .venv
+          uv venv .venv
           source .venv/bin/activate
-          pip install abi3 --no-index --no-deps --find-links dist --force-reinstall
-          pip install abi3 pytest
+          uv pip install abi3 --no-index --no-deps --find-links dist --reinstall
+          uv pip install abi3 pytest
           cd abi3 && pytest
 
   sdist:
